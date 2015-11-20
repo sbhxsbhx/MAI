@@ -2,7 +2,10 @@
 #define weighter_h_
 
 #include <stdio.h>
+#include <iostream>
+#include <fstream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -14,12 +17,14 @@ struct hist{
 
 class model{
 private:
-	int m1, m2, m3;
+	map<string, int> mass;
+	map<string, int> number;
 public:
 	model();
 	void put(int d);
 	void printModel();
 	bool remove(int d);
+	~model();
 };
 
 class weight{

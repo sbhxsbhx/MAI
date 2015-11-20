@@ -2,27 +2,69 @@
 
 using namespace std;
 
-model::model(){ m1 = 0;  m2 = 0;  m3 = 0; }
+model::model(){
+    // for tests
+    mass["apple"] = 1;
+    mass["pen"] = 2;
+    mass["note"] = 3;
+    number["apple"] = 0;
+    number["pen"] = 0;
+    number["note"] = 0;
+    /*ifstream cfg("iweight.cfg");
+    string name;
+    int m;
+    cfg >> m >> name;
+    while(m != EOF){
+        mass[name] = m;
+        number[name] = 0;
+        cfg >> m >> name;
+    }
+    cfg.close();*/
+    /*FILE *cfg = NULL;
+    int m;
+    string name;
+    cfg = fopen("iweight.cfg", "r");
+    fscanf(cfg, " %d %s", &m, &name);
+    while(m != EOF){
+        mass[name] = m;
+        number[name] = 0;
+        fscanf(cfg, " %d %s", &m, &name);
+    }
+    fclose(cfg);*/
+}
 
 void model::put(int d){
-    if(d == 2) m1++;
-    else if(d == 3) m2++;
-    else if(d == 5) m3++;
+    map<string, int>::iterator iter = mass.begin();
+    while(iter!=mass.end()){
+        if(d == iter->second)number[iter->first]++;
+        iter++;
+    }
 }
 
 void model::printModel(){
-	printf("m1 - %d\n", m1);
-	printf("m2 - %d\n", m2);
-	printf("m3 - %d\n\n", m3);
+    map<string, int>::iterator iter = mass.begin();
+    while(iter!=mass.end()){
+        cout << iter->first << " - " << number[iter->first] << endl;
+        iter++;
+    }
 }
 
 bool model::remove(int d){
-	if((d == 2) && (m1 > 0)){ m1--; return true; }
-	else if((d == 3) && (m2 > 0)){ m2--; return true; }
-	else if((d == 5) && (m3 > 0)){ m3--; return true; }
+    map<string, int>::iterator iter = mass.begin();
+    while(iter!=mass.end()){
+        if((d == iter->second) && (number[iter->first] > 0)){ number[iter->first]--; return true; }
+        iter++;
+    }
 	return false;
 }
 
+model::~model(){
+    map<string, int>::iterator iter = mass.begin();
+    while(iter!=mass.end()){
+        number.erase(iter->first);
+        mass.erase((iter++)->first);
+    }
+}
 
 weight::weight(){ mass = 0; }
 
