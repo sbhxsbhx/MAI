@@ -3,34 +3,15 @@
 using namespace std;
 
 model::model(){
-    // for tests
-    mass["apple"] = 1;
-    mass["pen"] = 2;
-    mass["note"] = 3;
-    number["apple"] = 0;
-    number["pen"] = 0;
-    number["note"] = 0;
-    /*ifstream cfg("iweight.cfg");
+    ifstream cfg("iweight.cfg");
     string name;
     int m;
-    cfg >> m >> name;
-    while(m != EOF){
-        mass[name] = m;
-        number[name] = 0;
+    while(!cfg.eof()){
         cfg >> m >> name;
-    }
-    cfg.close();*/
-    /*FILE *cfg = NULL;
-    int m;
-    string name;
-    cfg = fopen("iweight.cfg", "r");
-    fscanf(cfg, " %d %s", &m, &name);
-    while(m != EOF){
         mass[name] = m;
         number[name] = 0;
-        fscanf(cfg, " %d %s", &m, &name);
     }
-    fclose(cfg);*/
+    cfg.close();
 }
 
 void model::put(int d){
