@@ -21,7 +21,7 @@ private:
 	map<string, int> number;
 public:
 	model();
-	void put(int d);
+	bool put(int d);
 	void printModel();
 	bool remove(int d);
 	~model();
@@ -30,6 +30,7 @@ public:
 class weight{
 private:
 	vector<hist> history;
+	FILE* fhist;
 	int mass;
 	model obj;
 public:

@@ -14,12 +14,16 @@ model::model(){
     cfg.close();
 }
 
-void model::put(int d){
+bool model::put(int d){
     map<string, int>::iterator iter = mass.begin();
     while(iter!=mass.end()){
-        if(d == iter->second)number[iter->first]++;
+        if(d == iter->second){
+            number[iter->first]++;
+            return true;
+        }
         iter++;
     }
+    return false;
 }
 
 void model::printModel(){
@@ -47,7 +51,10 @@ model::~model(){
     }
 }
 
-weight::weight(){ mass = 0; }
+weight::weight(){
+    mass = 0;
+    fhist = fopen("history.hist", "w");
+}
 
 int weight::returnMass(){ return mass; }
 
@@ -57,7 +64,7 @@ void weight::printModel(){
 
 void weight::change(int Dm){
 	bool rez = true;
-	if(Dm > 0) obj.put(Dm);
+	if(Dm > 0) rez = obj.put(Dm);
 	else rez = obj.remove(-Dm);
 	if(rez){
 		hist newH;
@@ -66,8 +73,20 @@ void weight::change(int Dm){
         newH.Dm = Dm;
 		history.push_back(newH);
 		mass += Dm;
+
+		// write to file
+		fprintf(fhist, "%d %d %d\n", newH.t, newH.Dm, newH.m);
+		map<string, int>::iterator iter = number.begin();
+        while(iter!=number.end()){
+            fprintf(fhist, "%d ", number[iter->first]);
+            iter++;
+        }
+        fprintf(fhist, "\n");
 	}
 	else printf("Takogo predmeta net.\n");
 }
 
-weight::~weight(){ mass = 0; }
+weight::~weight(){
+    mass = 0;
+    fclose(fhist);
+}

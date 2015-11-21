@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <fstream>
 #include "weighter.h"
 
 int main(){
@@ -29,8 +30,8 @@ int main(){
 		}
 		else if(cmd == 5){
             char name[256];
-            printf("Vvedite imya fayla");
-            scanf("%s", &name);
+            printf("Vvedite imya fayla: ");
+            scanf("%s", name);
             ifstream fp(name);
             while(!fp.eof()){
                 fp >> m;
