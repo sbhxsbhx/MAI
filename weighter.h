@@ -18,8 +18,8 @@ struct hist{
 class model{
 private:
 	map<string, int> mass;
-	map<string, int> number;
 public:
+	map<string, int> number;
 	model();
 	bool put(int d);
 	void printModel();
@@ -30,11 +30,11 @@ public:
 class weight{
 private:
 	vector<hist> history;
-	FILE* fhist;
 	int mass;
 	model obj;
 public:
 	weight();
+	void InitHist();
 	int returnMass();
 	void printModel();
 	void change(int Dm);

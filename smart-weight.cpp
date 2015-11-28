@@ -12,6 +12,7 @@ int main(){
 		printf("3. Vivesti tekushii ves.\n");
 		printf("4. Vivesti kolichestvo predmetov.\n");
 		printf("5. Prochitat' fayl.\n");
+		printf("6. Exit\n\n\n");
 		scanf(" %d", &cmd);
 		if(cmd == 1){
 			printf("Vvedite massu: ");
@@ -40,6 +41,7 @@ int main(){
             }
             fp.close();
 		}
+		else if(cmd == 6) return 0;
 		else printf("Vi vveli nekorrektnie dannie.\n");
 	}
 }

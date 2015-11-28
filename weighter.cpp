@@ -53,7 +53,28 @@ model::~model(){
 
 weight::weight(){
     mass = 0;
-    fhist = fopen("history.hist", "w");
+    /*hist newH;
+    ///fhist = fopen("history.hist", "r");    /// do all with ifstream and ofstream
+    ifstream fhist("history.hist");
+    while(!fhist.eof()){
+        ///fscanf(fhist, "%d %d %d", &newH.t, &newH.Dm, &newH.m);
+        fhist >> newH.t >> newH.Dm >> newH.t;
+        history.push_back(newH);
+        change(newH.Dm);
+    }
+    ///fclose(fhist);
+    fhist.close();*/
+}
+
+void weight::InitHist(){
+    hist newH;
+    ifstream fhist("history.hist");
+    while(!fhist.eof()){
+        fhist >> newH.t >> newH.Dm >> newH.t;
+        history.push_back(newH);
+        change(newH.Dm);
+    }
+    fhist.close();
 }
 
 int weight::returnMass(){ return mass; }
@@ -73,20 +94,20 @@ void weight::change(int Dm){
         newH.Dm = Dm;
 		history.push_back(newH);
 		mass += Dm;
-
-		// write to file
-		fprintf(fhist, "%d %d %d\n", newH.t, newH.Dm, newH.m);
-		map<string, int>::iterator iter = number.begin();
-        while(iter!=number.end()){
-            fprintf(fhist, "%d ", number[iter->first]);
-            iter++;
-        }
-        fprintf(fhist, "\n");
 	}
 	else printf("Takogo predmeta net.\n");
 }
 
 weight::~weight(){
-    mass = 0;
+    int i = 0;
+    hist newH;
+    FILE *fhist = fopen("history.hist", "w");
+    while(i != history.size()){
+        newH = history[i];
+        fprintf(fhist, "%d %d %d\n", newH.t, newH.Dm, newH.m);
+        i++;
+    }
     fclose(fhist);
+
+    mass = 0;
 }
