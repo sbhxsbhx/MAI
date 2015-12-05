@@ -2,6 +2,22 @@
 #include <fstream>
 #include "weighter.h"
 
+int TodayHist = 0;
+
+void PrintAllHist(hist StrOfHist){
+    printf("| t = %3d | Dm = %3d | m = %3d |\n", StrOfHist.t, StrOfHist.Dm, StrOfHist.m);
+}
+
+void PrintTwoHist(hist StrOfHist){
+    if(StrOfHist.Dm%2 == 0)
+        printf("| t = %3d | Dm = %3d | m = %3d |\n", StrOfHist.t, StrOfHist.Dm, StrOfHist.m);
+}
+
+void PrintTodayHist(hist StrOfHist){
+    if(StrOfHist.t > TodayHist)
+        printf("| t = %3d | Dm = %3d | m = %3d |\n", StrOfHist.t, StrOfHist.Dm, StrOfHist.m);
+}
+
 int main(){
 	int cmd;
 	int m;
@@ -13,7 +29,10 @@ int main(){
 		printf("4. Vivesti kolichestvo predmetov.\n");
 		printf("5. Prochitat' fayl.\n");
 		printf("6. Initsializirovat' istoriyu.\n");
-		printf("7. Exit\n\n\n");
+		printf("7. Vivesti vse na ekran.\n");
+		printf("8. Vivesti vse predmeti s chetnoy massoy na ekran.\n");
+		printf("9. Vivesti isturiyu za segodnya.\n");
+		printf("0. Exit\n\n\n");
 		scanf(" %d", &cmd);
 		if(cmd == 1){
 			printf("Vvedite massu: ");
@@ -25,7 +44,8 @@ int main(){
 			scanf(" %d", &m);
 			pribor.change(-m);
 		}
-		else if(cmd == 3) printf("Tekushaya massa %d\n\n", pribor.returnMass());
+		else if(cmd == 3)
+            printf("Tekushaya massa %d\n\n", pribor.returnMass());
 		else if(cmd == 4){
 			printf("Kolichestvo predmetov:\n");
 			pribor.printModel();
@@ -42,8 +62,15 @@ int main(){
             }
             fp.close();
 		}
-		else if(cmd == 6) pribor.InitHist();
-		else if(cmd == 7) return 0;
-		else printf("Vi vveli nekorrektnie dannie.\n");
+		else if(cmd == 6)
+            TodayHist = pribor.InitHist();
+		else if(cmd == 7)
+            pribor.PrintHist(PrintAllHist);
+		else if(cmd == 8)
+            pribor.PrintHist(PrintTwoHist);
+		else if(cmd == 9)
+            pribor.PrintHist(PrintTodayHist);
+		else return 0;
+		///else printf("Vi vveli nekorrektnie dannie.\n");
 	}
 }

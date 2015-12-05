@@ -55,17 +55,19 @@ weight::weight(){
     mass = 0;
 }
 
-void weight::InitHist(){
+int weight::InitHist(){
     hist newH;
     ifstream fhist("history.hist");
     while(!fhist.eof()){
         fhist >> newH.t >> newH.Dm >> newH.m;
-        ///history.push_back(newH);
-        change(newH.Dm);
+        if(fhist.good() != 0) change(newH.Dm);
     }
-    obj.remove(-newH.Dm);
-    mass -= newH.Dm;
     fhist.close();
+    return newH.t;
+}
+
+void weight::PrintHist(void (*func)(hist histStr)){
+    for_each(history.begin(), history.end(), func);
 }
 
 int weight::returnMass(){ return mass; }

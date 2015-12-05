@@ -6,6 +6,7 @@
 #include <fstream>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
@@ -34,7 +35,8 @@ private:
 	model obj;
 public:
 	weight();
-	void InitHist();
+	int InitHist();
+	void PrintHist(void (*func)(hist histStr));
 	int returnMass();
 	void printModel();
 	void change(int Dm);
